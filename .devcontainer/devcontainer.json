@@ -1,0 +1,14 @@
+{
+  "name": "github-attestation-demo",
+  "image": "mcr.microsoft.com/devcontainers/universal:linux",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "EditorConfig.EditorConfig",
+        "github.vscode-github-actions",
+        "GitHub.copilot",
+        "GitHub.copilot-chat"
+      ]
+    }
+  }
+}
