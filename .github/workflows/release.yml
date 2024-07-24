@@ -37,10 +37,27 @@ jobs:
           push: true
           tags: ghcr.io/${{ github.repository }}:${{ github.ref_name }}
 
+      - name: Generate SBOM
+        id: generate_sbom
+        uses: anchore/sbom-action@d94f46e13c6c62f59525ac9a1e147a99dc0b9bf5 # v0.17.0
+        with:
+          image: ghcr.io/${{ github.repository }}:${{ github.ref_name }}
+          format: cyclonedx-json
+          output-file: 'sbom.cyclonedx.json'
+
       - name: Attest
-        uses: actions/attest-build-provenance@v1
+        uses: actions/attest-build-provenance@5e9cb68e95676991667494a6a4e59b8a2f13e1d0 # v1.3.3
         id: attest
         with:
           subject-name: ghcr.io/${{ github.repository }}
           subject-digest: ${{ steps.build_and_push.outputs.digest }}
+          push-to-registry: true
+
+      - name: Attest SBOM
+        uses: actions/attest-sbom@6d7733f629ce1368bd053e269afa8041a98a2b98 # v1.3.3
+        id: attest_sbom
+        with:
+          subject-name: ghcr.io/${{ github.repository }}
+          subject-digest: ${{ steps.build_and_push.outputs.digest }}
+          sbom-path: sbom.cyclonedx.json
           push-to-registry: true
