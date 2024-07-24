@@ -1,5 +1,5 @@
 ---
-name: super-linter
+name: 🦝 Super-Linter
 
 on:
   pull_request:
@@ -15,19 +15,19 @@ permissions: {}
 
 jobs:
   super-linter:
-    name: super-linter
+    name: Super-Linter
     runs-on: ubuntu-latest
     permissions:
       contents: read
       statuses: write
     steps:
-      - name: checkout
+      - name: Checkout
         id: checkout
         uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
         with:
           fetch-depth: 0
 
-      - name: super-linter
+      - name: Super-Linter
         id: super_linter
         uses: super-linter/super-linter/slim@3fe03abab2eafb293ace16d4a3b07aeabcb3f1a0 # v6.7.0
         env:
