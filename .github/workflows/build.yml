@@ -1,0 +1,30 @@
+---
+name: build
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions: {}
+
+jobs:
+  build:
+    name: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: checkout
+        id: checkout
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+
+      - name: build image
+        id: build_image
+        uses: docker/build-push-action@1ca370b3a9802c92e886402e0dd88098a2533b12 # v6.4.1
+        with:
+          file: Dockerfile
+          context: .
+          push: false
+          load: true
+          tags: ghcr.io/${{ github.repository }}:${{ github.sha }}
